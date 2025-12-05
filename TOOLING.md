@@ -52,7 +52,17 @@ Cypress tests the application as a real user would.
 
 ---
 
-## 5. Docker (Containerization)
+## 5. Vitest (Unit Testing)
+**Location**: `VITEST.md` (Root)
+
+Vitest handles our low-level logic verification.
+-   **Goal**: Verify individual functions and hooks in isolation.
+-   **Key Feature**: Native ESM support and instant HMR-like feedback.
+-   **Workflow**: Write Code -> Write `*.test.ts` -> Run `pnpm test`.
+
+---
+
+## 6. Docker (Containerization)
 **Location**: `DOCKER.md` (Root)
 
 Docker ensures our app runs the same way everywhere.
@@ -62,7 +72,7 @@ Docker ensures our app runs the same way everywhere.
 
 ---
 
-## 6. Integration Strategy
+## 7. Integration Strategy
 
 How these tools work together in the **Turborepo** pipeline:
 
