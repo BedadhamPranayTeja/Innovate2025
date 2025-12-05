@@ -1,24 +1,28 @@
-import Fastify from 'fastify';
-import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import fastify from "fastify";
+import cors from "@fastify/cors";
+import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
+import { healthRoutes } from "./routes/health";
+import { authRoutes } from "./routes/auth";
+import authPlugin from "./plugins/auth";
 
-const app = Fastify({
-    logger: true
-});
+export function buildApp() {
+    const app = fastify({
+        logger: true,
+    });
 
-app.setValidatorCompiler(validatorCompiler);
-app.setSerializerCompiler(serializerCompiler);
+    // Register plugins
+    app.register(cors, {
+        origin: "*", // For development
+    });
+    app.register(authPlugin);
 
-app.get('/', async () => {
-    return { hello: 'world' };
-});
+    // Setup Zod validation
+    app.setValidatorCompiler(validatorCompiler);
+    app.setSerializerCompiler(serializerCompiler);
 
-const start = async () => {
-    try {
-        await app.listen({ port: 3000 });
-    } catch (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-};
+    // Register routes
+    app.register(healthRoutes);
+    app.register(authRoutes);
 
-start();
+    return app;
+}

@@ -2,11 +2,11 @@
     "extends": "@innovate/config/tsconfig.base.json",
     "compilerOptions": {
         "outDir": "dist",
-        "rootDir": "src",
-        "module": "commonjs"
+        "rootDir": "src"
     },
     "include": [
-        "src"
+        "src",
+        "drizzle.config.ts"
     ],
     "exclude": [
         "node_modules",

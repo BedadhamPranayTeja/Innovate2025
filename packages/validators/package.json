@@ -1,0 +1,19 @@
+{
+    "name": "@innovate/validators",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "scripts": {
+        "lint": "eslint . --max-warnings 0",
+        "check-types": "tsc --noEmit"
+    },
+    "dependencies": {
+        "zod": "^3.22.4",
+        "@innovate/types": "workspace:*"
+    },
+    "devDependencies": {
+        "@innovate/config": "workspace:*",
+        "typescript": "^5.3.3"
+    }
+}

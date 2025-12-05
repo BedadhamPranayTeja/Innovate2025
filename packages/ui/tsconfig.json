@@ -3,7 +3,9 @@
     "compilerOptions": {
         "outDir": "dist",
         "rootDir": "src",
-        "module": "commonjs"
+        "jsx": "react-jsx",
+        "module": "esnext",
+        "moduleResolution": "bundler"
     },
     "include": [
         "src"

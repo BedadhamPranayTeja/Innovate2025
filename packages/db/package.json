@@ -1,0 +1,25 @@
+{
+    "name": "@innovate/db",
+    "version": "0.0.0",
+    "private": true,
+    "main": "./src/index.ts",
+    "types": "./src/index.ts",
+    "scripts": {
+        "lint": "eslint . --max-warnings 0",
+        "check-types": "tsc --noEmit",
+        "generate": "drizzle-kit generate:pg",
+        "push": "drizzle-kit push:pg"
+    },
+    "dependencies": {
+        "drizzle-orm": "^0.29.3",
+        "postgres": "^3.4.3",
+        "@innovate/types": "workspace:*",
+        "@innovate/config": "workspace:*"
+    },
+    "devDependencies": {
+        "@innovate/config": "workspace:*",
+        "drizzle-kit": "^0.20.14",
+        "typescript": "^5.3.3",
+        "dotenv": "^16.4.5"
+    }
+}

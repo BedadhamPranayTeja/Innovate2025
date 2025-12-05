@@ -1,10 +1,12 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { Role } from "@/types";
+import { useEffect } from "react";
 
 // Layout
 import { AppShell, RoleGuard } from "@/components/layout";
@@ -34,7 +36,7 @@ const queryClient = new QueryClient();
 // Dashboard router component
 function DashboardRouter() {
   const { user } = useAuthStore();
-  
+
   switch (user?.role) {
     case Role.JUDGE:
       return <JudgeDashboard />;
@@ -45,54 +47,64 @@ function DashboardRouter() {
   }
 }
 
-const App = () => (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Landing />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Register />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
+const App = () => {
+  useEffect(() => {
+    fetch("/api/health")
+      .then((res) => res.json())
+      .then((data) => toast.success(`Backend Connected: ${data.status}`))
+      .catch(() => toast.error("Backend Connection Failed"));
+  }, []);
 
-          {/* Protected routes with AppShell */}
-          <Route element={<AppShell />}>
-            <Route path="/dashboard" element={<DashboardRouter />} />
-            <Route path="/teams" element={<TeamList />} />
-            <Route path="/teams/:id" element={<TeamDetail />} />
-            <Route path="/submissions" element={<MySubmissions />} />
-            <Route path="/submissions/new" element={<NewSubmission />} />
-            <Route path="/submissions/:id" element={<SubmissionDetail />} />
-            <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/ticket" element={<TicketPage />} />
-            
-            {/* Judge routes */}
-            <Route element={<RoleGuard allowed={[Role.JUDGE, Role.ADMIN]} />}>
-              <Route path="/judge/queue" element={<JudgeQueue />} />
-              <Route path="/judge/score/:id" element={<ScoreSubmission />} />
-            </Route>
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Public routes */}
+              <Route path="/" element={<Landing />} />
+              <Route path="/auth/login" element={<Login />} />
+              <Route path="/auth/register" element={<Register />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
 
-            {/* Admin routes */}
-            <Route element={<RoleGuard allowed={[Role.ADMIN]} />}>
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/users" element={<AdminDashboard />} />
-              <Route path="/admin/teams" element={<AdminDashboard />} />
-              <Route path="/admin/analytics" element={<AdminDashboard />} />
-              <Route path="/admin/settings" element={<AdminDashboard />} />
-            </Route>
-          </Route>
+              {/* Protected routes with AppShell */}
+              <Route element={<AppShell />}>
+                <Route path="/dashboard" element={<DashboardRouter />} />
+                <Route path="/teams" element={<TeamList />} />
+                <Route path="/teams/:id" element={<TeamDetail />} />
+                <Route path="/submissions" element={<MySubmissions />} />
+                <Route path="/submissions/new" element={<NewSubmission />} />
+                <Route path="/submissions/:id" element={<SubmissionDetail />} />
+                <Route path="/payment" element={<PaymentPage />} />
+                <Route path="/ticket" element={<TicketPage />} />
 
-          {/* 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
-);
+                {/* Judge routes */}
+                <Route element={<RoleGuard allowed={[Role.JUDGE, Role.ADMIN]} />}>
+                  <Route path="/judge/queue" element={<JudgeQueue />} />
+                  <Route path="/judge/score/:id" element={<ScoreSubmission />} />
+                </Route>
+
+                {/* Admin routes */}
+                <Route element={<RoleGuard allowed={[Role.ADMIN]} />}>
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/users" element={<AdminDashboard />} />
+                  <Route path="/admin/teams" element={<AdminDashboard />} />
+                  <Route path="/admin/analytics" element={<AdminDashboard />} />
+                  <Route path="/admin/settings" element={<AdminDashboard />} />
+                </Route>
+              </Route>
+
+              {/* 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+
+};
 
 export default App;
