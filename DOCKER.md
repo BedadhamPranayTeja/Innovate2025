@@ -1,17 +1,15 @@
 # Docker Architecture
 
-> **Scope**: Root (Infrastructure)  
+> **Scope**: Root (Infrastructure)
 > **Purpose**: Containerization & Orchestration
-
----
 
 ## 1. Overview
 
 We use Docker to containerize our applications for consistent deployment across environments (Local, Staging, Production).
 
 ### Core Principles
-1.  **Multi-Stage Builds**: We use multi-stage builds to keep production images small (e.g., discarding `node_modules` needed only for building).
-2.  **Pruning**: We use `turbo prune` to isolate package dependencies, ensuring that a change in `web` doesn't invalidate the cache for `api`.
+1.  **Multi-Stage Builds**: We use multi-stage builds to keep production images small.
+2.  **Pruning**: We use `turbo prune` to isolate package dependencies (including shared packages like `@innovate/ui`), ensuring that a change in `web` doesn't invalidate the cache for `api`.
 3.  **Environment Parity**: The container running locally via `docker-compose` should be nearly identical to the one running in production.
 
 ---
@@ -64,11 +62,3 @@ services:
     env_file:
       - apps/api/.env
 ```
-
----
-
-## 5. Production Optimization
-
--   **Frontend**: Served via Nginx (or similar static server) within the container, or uploaded to CDN. Our Dockerfile uses a multi-stage Nginx build.
--   **Backend**: Runs `node dist/app.js`.
--   **Caching**: Layers are ordered from least-changing (OS, Pnpm Store) to most-changing (Source Code) to maximize cache hits.

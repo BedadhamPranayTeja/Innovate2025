@@ -2,8 +2,6 @@
 
 > **Unified Documentation**: Storybook, Postman, Cypress
 
----
-
 ## 1. The Testing Pyramid
 
 We use a multi-layered approach to quality assurance, ensuring speed and confidence at every level.
@@ -12,7 +10,7 @@ We use a multi-layered approach to quality assurance, ensuring speed and confide
 graph TD
     A[Cypress E2E] -->|Integration| B[Postman API Tests]
     B -->|Contract| C[Storybook UI Tests]
-    C -->|Visual| D[Unit Tests]
+    C -->|Visual| D[Unit Tests (Vitest)]
 ```
 
 | Layer | Tool | Scope | Responsibility |
@@ -20,6 +18,7 @@ graph TD
 | **E2E** | **Cypress** | Full Stack | Verify critical user flows (Login -> Team -> Submit). |
 | **API** | **Postman** | Backend | Verify API contract, schema validation, and logic. |
 | **UI** | **Storybook** | Frontend | Verify component isolation, states, and accessibility. |
+| **Unit** | **Vitest** | Shared Logic | Verify utilities, hooks, and shared helpers. |
 
 ---
 

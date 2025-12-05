@@ -1,13 +1,11 @@
 # Cypress Architecture
 
-> **Scope**: Root (Integration)  
+> **Scope**: Root (Integration)
 > **Purpose**: End-to-End (E2E) Critical Flow Verification
-
----
 
 ## 1. Overview
 
-Cypress is our **Integration Guardrail**. Unlike Unit Tests (Jest) or Component Tests (Storybook), Cypress tests the **entire application stack** (Frontend + Backend + Database) working together.
+Cypress is our **Integration Guardrail**. Unlike Unit Tests (Vitest) or Component Tests (Storybook), Cypress tests the **entire application stack** (Frontend + Backend + Database) working together.
 
 ### Core Principles
 1.  **User-Centric**: Tests simulate real user interactions (clicks, typing), not code execution.
@@ -18,7 +16,7 @@ Cypress is our **Integration Guardrail**. Unlike Unit Tests (Jest) or Component 
 
 ## 2. Directory Structure
 
-Cypress lives at the root to access both apps if needed, but primarily targets the Web URL.
+Cypress lives at the root to access both apps if needed, but primarily targets the Web URL (`apps/web`).
 
 ```text
 cypress/
@@ -78,4 +76,4 @@ Use stable attributes.
 
 ### Database Reset
 Before *every* test run, the database must be reset to a known clean state.
-`cy.exec('pnpm --filter api db:reset')`
+`cy.exec('pnpm --filter @innovate/db db:reset')`

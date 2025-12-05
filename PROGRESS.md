@@ -1,96 +1,53 @@
 # Innovate 2025 EOS - Build Progress
 
-> Tracking implementation progress against the technical architecture
+> **Status**: Monorepo Refactoring & Architecture Alignment
+> **Source**: `planning/lock/Technical Blueprint.md`
 
 ---
 
-## Build Phases Overview
+## Roadmap Overview
 
-| Phase | Status | Completion |
-|-------|--------|------------|
-| Phase 1: Foundation | ✅ Complete | 100% |
-| Phase 2: Authentication | ✅ Complete | 100% |
-| Phase 3: Phase System | ✅ Complete | 100% |
-| Phase 4: Teams | ✅ Complete | 100% |
-| Phase 5: Submissions | ✅ Complete | 100% |
-| Phase 6: Judging | ✅ Complete | 100% |
-| Phase 7: Payments | ✅ Complete | 100% |
-| Phase 8: Admin | ✅ Complete | 100% |
-| Phase 9: Polish | ✅ Complete | 100% |
+We are currently restructuring the codebase into a scalable Monorepo.
+
+| Phase | Description | Status |
+|-------|-------------|--------|
+| **Phase 1** | **Documentation & Architecture** | ✅ Complete |
+| **Phase 2** | **Foundation (Shared Packages)** | 🟡 Pending |
+| **Phase 3** | **Backend Core (Fastify)** | 🔴 Pending |
+| **Phase 4** | **Frontend Alignment (Domain-Driven)** | 🔴 Pending |
+| **Phase 5** | **Quality & Tooling** | 🔴 Pending |
 
 ---
 
 ## Detailed Progress
 
-### Phase 1: Foundation ✅
-- [x] TypeScript types (`src/types/`)
-- [x] Design system tokens (`index.css`, `tailwind.config.ts`)
-- [x] Base UI components with variants
-- [x] Layout components (AppShell, Sidebar, Header, RoleGuard)
+### Phase 1: Documentation & Architecture ✅
+- [x] Root `ARCHITECTURE.md` (SSOT)
+- [x] Backend Architecture (`apps/api/ARCHITECTURE.md`)
+- [x] Frontend Architecture (`apps/web/ARCHITECTURE.md`)
+- [x] Tooling Docs (`STORYBOOK.md`, `POSTMAN.md`)
+- [x] Auxiliary Docs (`ENV.md`, `DOCKER.md`, `CYPRESS.md`)
 
-### Phase 2: Authentication ✅
-- [x] Auth store (Zustand)
-- [x] Login/Register pages
-- [x] Role selection, RoleGuard, mock auth with localStorage
+### Phase 2: Foundation (Shared Packages) 🟡
+- [ ] Workspace setup (`turbo.json`, `pnpm-workspace.yaml`)
+- [ ] `@innovate/ui` (Shared components)
+- [ ] `@innovate/validators` (Shared Zod schemas)
+- [ ] `@innovate/types` (Shared TS interfaces)
+- [ ] `@innovate/db` (Drizzle ORM setup)
+- [ ] `@innovate/config` (Shared configs)
 
-### Phase 3: Phase System ✅
-- [x] Phase store, PhaseBadge, CountdownTimer
-- [x] Phase-aware landing page, Admin phase control
+### Phase 3: Backend Core 🔴
+- [ ] Fastify App Skeleton
+- [ ] Auth Feature (Login/Register)
+- [ ] User Feature
+- [ ] Database Connection
 
-### Phase 4: Teams ✅
-- [x] Team store
-- [x] TeamList, TeamDetail pages
-- [x] TeamCard, CreateTeamDialog, JoinTeamDialog
-- [x] MemberList, JoinRequestCard components
+### Phase 4: Frontend Alignment 🔴
+- [ ] Domain-Driven Directory Structure
+- [ ] Integration with `@innovate/ui`
+- [ ] Integration with Real API
 
-### Phase 5: Submissions ✅
-- [x] Submission store
-- [x] MySubmissions, NewSubmission, SubmissionDetail pages
-- [x] SubmissionCard, SubmissionForm (multi-step) components
-
-### Phase 6: Judging ✅
-- [x] Judge store
-- [x] JudgeQueue, ScoreSubmission pages
-- [x] ScoringRubric, AssignmentQueue components
-- [x] Leaderboard page
-
-### Phase 7: Payments ✅
-- [x] PaymentPage with mock checkout
-- [x] TicketPage with QR ticket display
-
-### Phase 8: Admin ✅
-- [x] Admin dashboard with tabbed interface
-- [x] PhaseControl
-- [x] UserTable component
-- [x] TeamOverview component
-- [x] AnalyticsDashboard with charts
-
-### Phase 9: Polish ✅
-- [x] Loading states, Empty states
-- [x] Basic animations (Framer Motion)
-- [x] Error boundaries
-- [x] Mobile responsiveness audit
-- [x] Accessibility audit (WCAG 2.1)
-
----
-
-## Remaining Work
-
-1. **Backend Integration**
-   - Connect Lovable Cloud
-   - Migrate from localStorage to database
-   - Real authentication
-
----
-
-## Demo Accounts
-
-| Role | Email | Password |
-|------|-------|----------|
-| Student | student@demo.com | demo123 |
-| Judge | judge@demo.com | demo123 |
-| Admin | admin@demo.com | demo123 |
-
----
-
-*Last updated: December 4, 2025*
+### Phase 5: Quality & Tooling 🔴
+- [ ] Storybook Setup
+- [ ] Postman Collections
+- [ ] Cypress E2E Tests

@@ -1,13 +1,13 @@
 # Environment Variables
 
-> **Strategy**: Type-Safe Configuration with Zod
-
----
+> **Strategy**: Type-Safe Configuration with Shared Zod Schemas
 
 ## 1. Overview
 
 We use `.env` files to manage secrets and configuration.
 **NEVER commit `.env` files to Git.** Only commit `.env.example`.
+
+We leverage **`@innovate/validators`** to share environment schemas between the app and the config loader.
 
 ---
 
@@ -19,17 +19,14 @@ We use `.env` files to manage secrets and configuration.
 | `VITE_ENABLE_ANALYTICS` | No | Toggle for analytics. |
 
 ### Validation
-We use `vite-plugin-environment` or manual Zod validation in `src/config.ts`.
+
+We use manual Zod validation in `src/config.ts`, importing the schema from our shared package.
 
 ```typescript
 // apps/web/src/config.ts
-import { z } from 'zod';
+import { WebEnvSchema } from '@innovate/validators';
 
-const envSchema = z.object({
-  VITE_API_URL: z.string().url(),
-});
-
-export const config = envSchema.parse(import.meta.env);
+export const config = WebEnvSchema.parse(import.meta.env);
 ```
 
 ---
@@ -43,20 +40,15 @@ export const config = envSchema.parse(import.meta.env);
 | `PORT` | No | Port to listen on (default: 3000). |
 
 ### Validation
-We validate env vars on server startup. If validation fails, the app crashes immediately (Fail Fast).
+
+We validate env vars on server startup using a Fastify plugin or direct parsing.
 
 ```typescript
-// apps/api/src/config.ts
-import { z } from 'zod';
+// apps/api/src/plugins/env.ts
+import { ApiEnvSchema } from '@innovate/validators';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const envSchema = z.object({
-  DATABASE_URL: z.string().url(),
-  JWT_SECRET: z.string().min(32),
-  PORT: z.coerce.number().default(3000),
-});
-
-export const config = envSchema.parse(process.env);
+export const config = ApiEnvSchema.parse(process.env);
 ```
